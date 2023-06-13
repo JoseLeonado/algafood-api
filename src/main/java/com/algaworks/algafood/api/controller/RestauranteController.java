@@ -43,7 +43,9 @@ public class RestauranteController {
 	
 	@GetMapping
 	public List<RestauranteModel> listar() {
-		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
+		List<Restaurante> todosRestaurantes = restauranteRepository.findAll();
+		
+		return restauranteModelAssembler.toCollectionModel(todosRestaurantes);
 	}
 
 	@GetMapping("/{restauranteId}")
@@ -59,7 +61,9 @@ public class RestauranteController {
 		try {
 			Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput);
 			
-			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
+			restaurante = cadastroRestaurante.salvar(restaurante);
+			
+			return restauranteModelAssembler.toModel(restaurante);
 		} catch (CozinhaNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage(), e);
 		}
@@ -69,16 +73,13 @@ public class RestauranteController {
 	public RestauranteModel atualizar(@PathVariable Long restauranteId,
 			@RequestBody @Valid RestauranteInput restauranteInput) {
 		try {
-//			Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput);
-			
 			Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 		
 			restauranteInputDisassembler.copyToDomainObject(restauranteInput, restauranteAtual);
 			
-//			BeanUtils.copyProperties(restaurante, restauranteAtual, 
-//					"id", "formasPagamento", "endereco", "dataCadastro", "produtos");
+			restauranteAtual = cadastroRestaurante.salvar(restauranteAtual);
 			
-			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
+			return restauranteModelAssembler.toModel(restauranteAtual);
 		} catch (CozinhaNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage(), e);
 		}

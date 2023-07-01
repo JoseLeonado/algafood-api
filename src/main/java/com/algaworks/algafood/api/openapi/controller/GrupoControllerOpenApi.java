@@ -38,7 +38,6 @@ public interface GrupoControllerOpenApi {
 	@ApiOperation("Atualiza um grupo por ID")
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "Grupo atualizado", response = Problem.class),
-		@ApiResponse(code = 400, message = "ID do grupo inválido", response = Problem.class),
 		@ApiResponse(code = 404, message = "Grupo não encontrado", response = Problem.class)
 	})
 	GrupoModel atualizar(
@@ -51,7 +50,6 @@ public interface GrupoControllerOpenApi {
 	@ApiOperation("Exclui um grupo por ID")
 	@ApiResponses({
 		@ApiResponse(code = 204, message = "Grupo excluído"),
-		@ApiResponse(code = 400, message = "ID do grupo inválido", response = Problem.class),
 		@ApiResponse(code = 404, message = "Grupo não encontrado", response = Problem.class)
 	})
 	void remover(

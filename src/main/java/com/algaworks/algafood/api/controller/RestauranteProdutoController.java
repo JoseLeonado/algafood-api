@@ -48,6 +48,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 	@Autowired
 	private ProdutoInputDisassembler produtoInputDisassembler;
 	
+	@Override
 	@GetMapping
 	public List<ProdutoModel> listar(@PathVariable Long restauranteId,
 			@RequestParam(required = false) boolean incluirInativos) {
@@ -56,7 +57,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 		List<Produto> todosProdutos = null;
 		
 		if (incluirInativos) {
-			todosProdutos= produtoRepository.findTodosByRestaurante(restaurante);
+			todosProdutos = produtoRepository.findTodosByRestaurante(restaurante);
 		} else {
 			todosProdutos = produtoRepository.findAtivosByRestaurante(restaurante);
 		}
@@ -64,6 +65,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 		return produtoModelAssembler.toCollectionModel(todosProdutos);
 	}
 	
+	@Override
 	@GetMapping("/{produtoId}")
 	public ProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		Produto produto = cadastroProduto.buscarOuFalhar(restauranteId, produtoId);
@@ -71,6 +73,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 		return produtoModelAssembler.toMode(produto);
 	}
 	
+	@Override
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProdutoModel adicionar(@PathVariable Long restauranteId,
@@ -85,6 +88,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 		return produtoModelAssembler.toMode(produto);
 	}
 
+	@Override
 	@PutMapping("/{produtoId}")
 	public ProdutoModel atualizar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
 			@RequestBody @Valid ProdutoInput produtoInput) {

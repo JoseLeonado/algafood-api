@@ -31,9 +31,8 @@ public class UsuarioModelAssembler
 		
 		modelMapper.map(usuario, usuarioModel);
 		
-		usuarioModel.add(linkTo(methodOn(UsuarioController.class)
-				.listar()).withRel("usuarios"));
-		
+        usuarioModel.add(linkTo(UsuarioController.class).withRel("usuarios"));
+
 		usuarioModel.add(linkTo(methodOn(UsuarioGrupoController.class)
 				.listar(usuarioModel.getId())).withRel("grupos-usuario"));
 		

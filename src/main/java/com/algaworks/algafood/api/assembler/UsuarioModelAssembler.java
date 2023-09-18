@@ -28,7 +28,6 @@ public class UsuarioModelAssembler
 	@Override
 	public UsuarioModel toModel(Usuario usuario) {
 		UsuarioModel usuarioModel = createModelWithId(usuario.getId(), usuario);
-		
 		modelMapper.map(usuario, usuarioModel);
 		
         usuarioModel.add(linkTo(UsuarioController.class).withRel("usuarios"));

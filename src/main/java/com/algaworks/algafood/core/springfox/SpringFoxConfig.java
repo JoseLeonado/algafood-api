@@ -14,8 +14,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -28,10 +26,6 @@ import com.algaworks.algafood.api.v1.model.PedidoResumoModel;
 import com.algaworks.algafood.api.v1.openapi.model.CozinhasModelOpeanApi;
 import com.algaworks.algafood.api.v1.openapi.model.PageableModelOpenApi;
 import com.algaworks.algafood.api.v1.openapi.model.PedidosResumoModelOpeanApi;
-import com.algaworks.algafood.api.v2.model.CidadeModelV2;
-import com.algaworks.algafood.api.v2.model.CozinhaModelV2;
-import com.algaworks.algafood.api.v2.openapi.model.CidadesModelV2OpenApi;
-import com.algaworks.algafood.api.v2.openapi.model.CozinhasModelV2OpenApi;
 import com.fasterxml.classmate.TypeResolver;
 
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
@@ -54,7 +48,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SpringFoxConfig implements WebMvcConfigurer {
 
-//	@Bean
+	@Bean
 	public Docket apiDocketV1() {
 		var typeResolver = new TypeResolver();
 		
@@ -94,40 +88,6 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 						new Tag("Produtos", "Gerencia os produtos de restaurantes"),
 						new Tag("Usuários", "Gerencia os usuários"),
 						new Tag("Estatísticas", "Estatísticas da AlgaFood"));
-	}
-	
-	@Bean
-	public Docket apiDocketV2() {
-		var typeResolver = new TypeResolver();
-		
-		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName("V2")
-				.select()
-					.apis(RequestHandlerSelectors.basePackage("com.algaworks.algafood.api"))
-					.paths(PathSelectors.ant("/v2/**"))
-					.build()
-				.useDefaultResponseMessages(false)
-				.globalResponseMessage(RequestMethod.GET, globalGetResponseMessages())
-				.globalResponseMessage(RequestMethod.POST, globalPostPutResponseMessages())
-				.globalResponseMessage(RequestMethod.PUT, globalPostPutResponseMessages())
-				.globalResponseMessage(RequestMethod.DELETE, globalDeleteResponseMessages())
-				.additionalModels(typeResolver.resolve(Problem.class))
-				.ignoredParameterTypes(ServletWebRequest.class,
-						URL.class, URI.class, URLStreamHandler.class, Resource.class, 
-						File.class, InputStream.class)
-				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
-				
-				.alternateTypeRules(AlternateTypeRules.newRule(
-						typeResolver.resolve(PagedModel.class, CozinhaModelV2.class),
-					    CozinhasModelV2OpenApi.class))
-
-				.alternateTypeRules(AlternateTypeRules.newRule(
-				        typeResolver.resolve(CollectionModel.class, CidadeModelV2.class),
-				        CidadesModelV2OpenApi.class))
-
-				.apiInfo(apiInfoV2())
-				.tags(new Tag("Cidades", "Gerencia as cidades"),
-				        new Tag("Cozinhas", "Gerencia as cozinhas"));
 	}
 	
 	private List<ResponseMessage> globalGetResponseMessages() {
@@ -185,20 +145,9 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	
 	private ApiInfo apiInfoV1() {
 		return new ApiInfoBuilder()
-				.title("AlgaFood API (Depreciada)")
-				.description("API aberta para clientes e restaurantes.<br>"
-						+ "<strong>Essa versão da API está depreciada e deixará de existir 01/01/2024. "
-						+ "Use a versão mais atual da API.")
-				.version("1")
-				.contact(new Contact("José Leonardo", "https://www.jlcb.com", "contato@jlcb.com"))
-				.build();
-	}
-	
-	private ApiInfo apiInfoV2() {
-		return new ApiInfoBuilder()
 				.title("AlgaFood API")
-				.description("API aberta para clientes e restaurantes")
-				.version("2")
+				.description("API aberta para clientes e restaurantes.")
+				.version("1")
 				.contact(new Contact("José Leonardo", "https://www.jlcb.com", "contato@jlcb.com"))
 				.build();
 	}

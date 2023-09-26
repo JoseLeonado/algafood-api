@@ -40,7 +40,7 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
 		return formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasPagamento());
 	}
 	
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
 	@Override
 	@DeleteMapping("/{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -48,7 +48,7 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
 		cadastroRestaurante.desassociarFormaPagamento(restauranteId, formaPagamentoId);
 	}
 	
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
 	@Override
 	@PutMapping("/{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)

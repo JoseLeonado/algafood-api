@@ -45,7 +45,7 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
 						.listar(restauranteId)).withSelfRel());
 	}
 	
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarCadastro
 	@Override
 	@DeleteMapping("/{usuarioId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -53,7 +53,7 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
 		cadastroRestaurante.desassociarResponsavel(restauranteId, usuarioId);
 	}
 	
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarCadastro
 	@Override
 	@PutMapping("/{usuarioId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)

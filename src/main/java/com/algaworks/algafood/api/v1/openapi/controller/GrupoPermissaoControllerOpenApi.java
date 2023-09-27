@@ -1,6 +1,6 @@
 package com.algaworks.algafood.api.v1.openapi.controller;
 
-import java.util.List;
+import org.springframework.hateoas.CollectionModel;
 
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 import com.algaworks.algafood.api.v1.model.PermissaoModel;
@@ -19,7 +19,7 @@ public interface GrupoPermissaoControllerOpenApi {
         @ApiResponse(code = 400, message = "ID do grupo inválido", response = Problem.class),
         @ApiResponse(code = 404, message = "Grupo não encontrado", response = Problem.class)
     })
-	List<PermissaoModel> listar(
+	CollectionModel<PermissaoModel> listar(
 			@ApiParam(value = "ID do grupo", example = "1", required = true)
 			Long grupoId);
 

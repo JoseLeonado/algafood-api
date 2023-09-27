@@ -194,7 +194,7 @@ insert into oauth_client_details (
   access_token_validity, refresh_token_validity, autoapprove
 )
 values (
-  'foodanalytics', null, '$2y$12$fahbH37S2pyk1RPuIHKP.earzFmgAJJGo26rE.59vf4wwiiTKHnzO',
+  'foodanalytics', null, '$2a$10$TZErgO5Jbirt2GZh8MU/yukRgr/lIoAbL1Ea2bZRuyXOP7SrXwcDG',
   'READ,WRITE', 'authorization_code', 'http://localhost:8082', null,
   null, null, null
 );

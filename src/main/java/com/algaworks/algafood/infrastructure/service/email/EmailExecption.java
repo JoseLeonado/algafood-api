@@ -11,5 +11,5 @@ public class EmailExecption extends RuntimeException {
 	public EmailExecption(String message) {
 		super(message);
 	}
-	
+
 }
